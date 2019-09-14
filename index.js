@@ -3,13 +3,45 @@ const path = require('path');
 var mongoose = require('mongoose');
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-	console.log('connected');
+
+var providerSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String
 });
+
+var dosageSchema = new mongoose.Schema({
+  time: String,
+  amount: Number
+});
+
+var usageHistorySchema = new mongoose.Schema({
+  status: Boolean,
+  updated_at: Date
+});
+
+var medicationSchema = new mongoose.Schema({
+  status: Boolean,
+  name: String,
+  illness: String,
+  dosage: dosageSchema,
+  current_size: Number,
+  history: [usageHistorySchema]
+});
+
+var profileSchema = new mongoose.Schema({
+  provider_id: mongoose.Schema.Types.ObjectId,
+  name: String,
+  age: Number,
+  email: String,
+  medications: [medicationSchema]
+});
+
+var Provider = mongoose.model('Provider', providerSchema);
+var Profile = mongoose.model('Profile', profileSchema);
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
