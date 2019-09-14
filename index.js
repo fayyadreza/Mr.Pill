@@ -11,14 +11,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
 // MODELS
 var dosageSchema = new mongoose.Schema({
     time: String,
-    amount: Number
-}); 
-var usageHistorySchema = new mongoose.Schema({
+    amount: Number }); var usageHistorySchema = new mongoose.Schema({
     status: Boolean,
     updated_at: Date
 });
@@ -67,8 +63,8 @@ app.post('/api/provider-create', async (req, res) => {
         });
 });
 
-app.get('api/get-provider/:id', async (req, res) => {
-    await Provider.findById(req.params.id)
+app.get('/api/get-provider/:id', async (req, res) => {
+    await Provider.findById(req.params.id).lean().exec()
         .then(provider => {
             res.status(200).send(JSON.stringify(provider));
         })
@@ -77,7 +73,7 @@ app.get('api/get-provider/:id', async (req, res) => {
         });
 });
 
-app.delete('api/del-provider', async (req, res) => {
+app.delete('/api/del-provider', async (req, res) => {
     await Provider.findByIdAndRemove(req.user._id)
         .then(del => {
             res.status(200).send(JSON.stringify(del))
@@ -87,7 +83,7 @@ app.delete('api/del-provider', async (req, res) => {
         });
 });
 
-app.post('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
+app.post('/api/update-provider/:id', async (req, res) => { //adds new patient to the provider
    const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
    provider.markModified("profiles");
    await provider.save()
@@ -99,7 +95,7 @@ app.post('api/update-provider/:id', async (req, res) => { //adds new patient to 
      });
 });
 
-app.get('api/get-patients-provider/:id', async (req, res) => {
+app.get('/api/get-patients-provider/:id', async (req, res) => {
    await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
        .then(profiles => {
            res.status(200).send(JSON.stringify(profiles));
@@ -119,10 +115,10 @@ app.post('/api/profile', async (req, res) => {
   let profile = new Profile(req.body.profile);
   await profile.save()
     .then((p) => {
-      let provider = Provider.findById(req.body.providerId)
-      p.provider_id = provider;
-      provider.profiles.push(p);
-      res.status(200).send(JSON.stringify(p));
+      let provider = Provider.findById(req.body.profile.provider_id)
+      provider.profiles.push(profile);
+      provider.save();
+      res.status(200).end(JSON.stringify(p));
     })
     .catch(err => {
       res.status(400).send(err);
@@ -149,7 +145,17 @@ app.get('/api/profile/:id', async (req, res) => {
     .then((p) => {
       res.status(200).send(JSON.stringify(p));
     })
-    .catch((e) => {
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
+app.get('/api/get-profile-by-email/:email', async (req, res) => {
+  await Profile.findOne({ email: req.params.email }).lean().exec()
+    .then((p) => {
+      res.status(200).send(JSON.stringify(p));
+    })
+    .catch((err) => {
       res.status(400).send(err);
     });
 });
