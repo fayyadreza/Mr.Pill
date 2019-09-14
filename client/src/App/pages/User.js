@@ -14,6 +14,8 @@ import Profile from './Profile';
 
 class User extends Component {
     constructor(props) {
+        console.log("PROPS: ");
+        console.log(props);
         super(props);
         this.state = {
             id: props.id,
