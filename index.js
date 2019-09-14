@@ -170,6 +170,8 @@ app.put('/api/decrement-dosage', async (req, res) => {
 app.delete('/api/delete-med', async (req, res) => {
    const med = await Medication.findOne({_id: req.body.medicationId});
    const dosage = med.dosage;
+   const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(med.provider_id)});
+   profile.medications = profile.medications.filter(medId => !medId.equals(med._id)); //this should work
    await Dosage.deleteOne({_id: dosage._id}).save();
    await Medication.deleteOne({_id: med._id}).save()
        .then(med => {

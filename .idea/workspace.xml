@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0cca282-e07a-4eca-8414-7c5d211ca904" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="171" column="29" selection-start-line="171" selection-start-column="29" selection-end-line="171" selection-end-column="29" />
+            <state relative-caret-position="211">
+              <caret line="173" column="104" selection-start-line="173" selection-start-column="104" selection-end-line="173" selection-end-column="104" />
             </state>
           </provider>
         </entry>
@@ -118,7 +119,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18076000" />
+    <option name="totallyTimeSpent" value="19616000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -172,8 +173,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="171" column="29" selection-start-line="171" selection-start-column="29" selection-end-line="171" selection-end-column="29" />
+        <state relative-caret-position="211">
+          <caret line="173" column="104" selection-start-line="173" selection-start-column="104" selection-end-line="173" selection-end-column="104" />
         </state>
       </provider>
     </entry>
