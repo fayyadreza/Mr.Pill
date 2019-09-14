@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 //      useCreateIndex: true,
 //      replicaSet: "Cluster0-shard-0"
 //});
+const app = express();
 mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 const app = express();
 var db = mongoose.connection;
@@ -41,6 +42,8 @@ var medicationSchema = new mongoose.Schema({
 });
 
 var profileSchema = new mongoose.Schema({
+    provider_id: {type: mongoose.Schema.Types.ObjectId, ref: "Providers"},
+    // provider_id: providerSchema,
     name: String,
     age: Number,
     email: String,
@@ -57,8 +60,18 @@ var providerSchema = new mongoose.Schema({
 
 const Provider = mongoose.model('Provider', providerSchema, "Providers");
 const Profile = mongoose.model('Profile', profileSchema, "Profiles");
+const Medication = mongoose.model('Medication', medicationSchema, "Medications");
+const History = mongoose.model('History', usageHistorySchema, "Histories");
+const Dosage = mongoose.model('Dosage', dosageSchema, "Dosages");
+
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+const Provider = mongoose.model('Provider', providerSchema, "Providers");
+const Profile = mongoose.model('Profile', profileSchema, "Profiles");
 
 app.post('/api/provider-create', async (req, res) => {
+    console.log("asd");
     if (await Provider.findOne({email: req.body.email})) res.status(400).send();
     await Provider.insertOne({name: req.body.name, email: req.body.name, phone: req.body.phone})
         .then(provider => {
@@ -89,7 +102,7 @@ app.delete('api/del-provider', async (req, res) => {
         });
 });
 
-app.put('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
+app.post('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
    const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
    const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(req.params.id)});
    provider.profiles.push(profile);
@@ -119,7 +132,6 @@ app.listen(port);
 
 // CREATE
 app.post('/api/profile', async (req, res) => {
-  console.log(req.body);
   let profile = new Profile(req.body.data);
   await profile.save()
     .then((p) => {
@@ -128,6 +140,15 @@ app.post('/api/profile', async (req, res) => {
     .catch(err => {
       res.status(400).send(err);
     });
+});
+
+// PUT
+app.put('/api/profile/', async (req, res) => {
+  const profile = await Profile.findById(req.body.id);
+  profiles.medications.push(req.body.medication);
+  await profile.save();
+  if (profile) res.status(200).send(profile);
+  else res.status(400).send(err);
 });
 
 // GET
