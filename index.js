@@ -173,6 +173,4 @@ app.delete('/api/profile', async (req, res) => {
     });
 });
 
-// Provider endpoints
-
 console.log('App is listening on port ' + port);
