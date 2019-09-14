@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 //      useCreateIndex: true,
 //      replicaSet: "Cluster0-shard-0"
 //});
-const app = express();
 mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 const app = express();
 var db = mongoose.connection;
