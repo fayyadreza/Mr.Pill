@@ -10,7 +10,7 @@ class Home extends Component {
       <div className="App">
         <h1>Welcome to prescription Assistant</h1>
 
-        <Link to={{ pathname: "/User", state: { id: "5d7d468ee7179a084efd4c8d" } }}>
+        <Link to={{ pathname: "/User", id: "5d7d468ee7179a084efd4c8d" }}>
           <Button type='primary'>Login</Button>
         </Link>
       </div>

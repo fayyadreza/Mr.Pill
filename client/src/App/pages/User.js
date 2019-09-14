@@ -18,7 +18,7 @@ class User extends Component {
         console.log(props);
         super(props);
         this.state = {
-            id: props.id,
+            id: props.location.id,
             data_source: {}
         };
         console.log("id: " + this.state.id);
