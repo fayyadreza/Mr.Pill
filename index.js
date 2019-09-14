@@ -1,8 +1,14 @@
 const express = require('express');
 const path = require('path');
 var mongoose = require('mongoose');
-
 const app = express();
+const { uri } = require("../config.json");
+mongoose.connect(URI, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    replicaSet: "HTN"
+});
 mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
