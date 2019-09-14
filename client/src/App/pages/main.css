@@ -1,0 +1,7 @@
+.meds-table{
+    max-height: 20vh;
+    max-width: 25vw;
+    width: 100%;
+    overflow: hidden;
+    background-color: blue;
+}

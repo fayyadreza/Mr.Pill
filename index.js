@@ -57,11 +57,10 @@ const Dosage = mongoose.model('Dosage', dosageSchema, "Dosages");
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.post('/api/provider-create', async (req, res) => {
-    console.log("asd");
-    if (await Provider.findOne({email: req.body.email})) res.status(400).send();
-    await Provider.insertOne({name: req.body.name, email: req.body.name, phone: req.body.phone})
-        .then(provider => {
-            res.status(200).send(JSON.stringify(provider));
+    let provider = new Provider(req.body.data);
+    await provider.save()
+        .then((p) => {
+            res.status(200).send(p);
         })
         .catch(err => {
             res.status(400).send(err);
