@@ -1,0 +1,4 @@
+{
+  "URI": "mongodb+srv://Admin:adminpassword@cluster0-kcs63.gcp.mongodb.net/test",
+  "HEROKU": "http://hackthenorth2019.herokuapp.com/"
+}
