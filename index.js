@@ -2,24 +2,16 @@ const express = require('express');
 const path = require('path');
 var mongoose = require('mongoose');
 const app = express();
-const { uri } = require("../config.json");
-mongoose.connect(URI, {
+const { uri } = require("./config.json");
+mongoose.connect(uri, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
-    replicaSet: "HTN"
+    replicaSet: "Cluster0-shard-0"
 });
 mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
-var providerSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    phone: String,
-    // profiles: [{type: mongoose.Schema.Types.ObjectId, ref: "Profiles" }]
-    profiles: [profileSchema]
-});
 
 var dosageSchema = new mongoose.Schema({
     time: String,
@@ -41,16 +33,27 @@ var medicationSchema = new mongoose.Schema({
 });
 
 var profileSchema = new mongoose.Schema({
-    // provider_id: {type: mongoose.Schema.Types.ObjectId, ref: "Providers"},
-    provider_id: [providerSchema],
+    provider_id: {type: mongoose.Schema.Types.ObjectId, ref: "Providers"},
+    // provider_id: providerSchema,
     name: String,
     age: Number,
     email: String,
     medications: [medicationSchema]
 });
 
+var providerSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    // profiles: [{type: mongoose.Schema.Types.ObjectId, ref: "Profiles" }]
+    profiles: [profileSchema]
+});
+
 const Provider = mongoose.model('Provider', providerSchema, "Providers");
 const Profile = mongoose.model('Profile', profileSchema, "Profiles");
+const Medication = mongoose.model('Medication', medicationSchema, "Medications");
+const History = mongoose.model('History', usageHistorySchema, "Histories");
+const Dosage = mongoose.model('Dosage', dosageSchema, "Dosages");
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -66,6 +69,7 @@ app.get('*', (req,res) =>{
 });
 
 app.post('/api/provider-create', async (req, res) => {
+    console.log("asd");
     if (await Provider.findOne({email: req.body.email})) res.status(400).send();
     await Provider.insertOne({name: req.body.name, email: req.body.name, phone: req.body.phone})
         .then(provider => {
@@ -96,7 +100,7 @@ app.delete('api/del-provider', async (req, res) => {
         });
 });
 
-app.update('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
+app.post('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
    const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
    const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(req.params.id)});
    provider.profiles.push(profile);
