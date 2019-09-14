@@ -61,11 +61,10 @@ const Dosage = mongoose.model('Dosage', dosageSchema, "Dosages");
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.post('/api/provider-create', async (req, res) => {
-    console.log("asd");
-    if (await Provider.findOne({email: req.body.email})) res.status(400).send();
-    await Provider.insertOne({name: req.body.name, email: req.body.name, phone: req.body.phone})
-        .then(provider => {
-            res.status(200).send(provider);
+    let provider = new Provider(req.body.data);
+    await provider.save()
+        .then((p) => {
+            res.status(200).send(p);
         })
         .catch(err => {
             res.status(400).send(err);
@@ -93,26 +92,26 @@ app.delete('api/del-provider', async (req, res) => {
 });
 
 app.post('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
-   const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
-   const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(req.params.id)});
-   provider.profiles.push(profile);
-   profile.provider_id = provider;
-   provider.markModified("profiles");
-   profile.markModified("provider_id");
-   await provider.save();
-   await profile.save();
-   if (provider && profile) res.status(200).send();
-   else res.status(400).send(err);
+    const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
+    const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(req.params.id)});
+    provider.profiles.push(profile);
+    profile.provider_id = provider;
+    provider.markModified("profiles");
+    profile.markModified("provider_id");
+    await provider.save();
+    await profile.save();
+    if (provider && profile) res.status(200).send();
+    else res.status(400).send(err);
 });
 
 app.get('api/get-patients-provider/:id', async (req, res) => {
-   await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
-       .then(profiles => {
-           res.status(200).send(profiles);
-       })
-       .catch(err => {
-           res.status(400).send(err);
-       });
+    await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
+        .then(profiles => {
+            res.status(200).send(profiles);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 const port = process.env.PORT || 5000;
@@ -122,45 +121,45 @@ app.listen(port);
 
 // CREATE
 app.post('/api/profile', async (req, res) => {
-  let profile = new Profile(req.body.data);
-  await profile.save()
-    .then((p) => {
-      res.status(200).send(p);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    let profile = new Profile(req.body.data);
+    await profile.save()
+        .then((p) => {
+            res.status(200).send(p);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // PUT
 app.put('/api/profile/', async (req, res) => {
-  const profile = await Profile.findById(req.body.id);
-  profiles.medications.push(req.body.medication);
-  await profile.save();
-  if (profile) res.status(200).send(profile);
-  else res.status(400).send(err);
+    const profile = await Profile.findById(req.body.id);
+    profile.medications.push(req.body.medication);
+    await profile.save();
+    if (profile) res.status(200).send(profile);
+    else res.status(400).send(err);
 });
 
 // GET
 app.get('/api/profile/:id', async (req, res) => {
-  await Profile.findById(req.params.id).lean().exec()
-    .then((p) => {
-      res.status(200).send(p);
-    })
-    .catch((e) => {
-      res.status(400).send(err);
-    });
+    await Profile.findById(req.params.id).lean().exec()
+        .then((p) => {
+            res.status(200).send(p);
+        })
+        .catch((e) => {
+            res.status(400).send(err);
+        });
 });
 
 // DELETE
 app.delete('/api/profile', async (req, res) => {
-  await Profile.deleteOne(res.body.query)
-    .then(p => {
-      res.status(200).send(p);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    await Profile.deleteOne(res.body.query)
+        .then(p => {
+            res.status(200).send(p);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 console.log('App is listening on port ' + port);
