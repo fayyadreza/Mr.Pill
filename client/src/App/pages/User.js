@@ -26,7 +26,7 @@ class User extends Component {
                 return;
             }
             response.json.then(data => {
-
+                console.log(response);
             });
         }
         );
