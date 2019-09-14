@@ -2,14 +2,8 @@ const express = require('express');
 const path = require('path');
 var mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-//const { uri } = require("./config.json");
-//mongoose.connect(uri, {
-//      useNewUrlParser: true,
-//      useFindAndModify: false,
-//      useCreateIndex: true,
-//      replicaSet: "Cluster0-shard-0"
-//});
-mongoose.connect('mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
 const app = express();
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
