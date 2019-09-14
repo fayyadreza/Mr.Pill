@@ -19,14 +19,16 @@ class User extends Component {
             id: props.id,
             data_source: {}
         };
+        console.log("id: " + this.state.id);
         let user_data = {};
-        fetch("api/get-provider-id").then(response => {
+        fetch("api/get-provider-id:" + this.state.id).then(response => {
             if (response.status !== 200) {
                 console.log("Error communicating with database, error " + response.data);
                 return;
             }
             response.json.then(data => {
                 console.log(response);
+                user_data = response;
             });
         }
         );
