@@ -3,7 +3,7 @@ const path = require('path');
 var mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hack', { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -35,7 +35,7 @@ var medicationSchema = new mongoose.Schema({
 });
 
 var profileSchema = new mongoose.Schema({
-    provider_id: {type: mongoose.Schema.Types.ObjectId, ref: "Providers"},
+    provider_id: { type: mongoose.Schema.Types.ObjectId, ref: "Providers" },
     // provider_id: providerSchema,
     name: String,
     age: Number,
@@ -72,7 +72,7 @@ app.post('/api/provider-create', async (req, res) => {
 });
 
 app.get('api/get-provider/:id', async (req, res) => {
-    await Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})
+    await Provider.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
         .then(provider => {
             res.status(200).send(provider);
         })
@@ -82,7 +82,7 @@ app.get('api/get-provider/:id', async (req, res) => {
 });
 
 app.delete('api/del-provider', async (req, res) => {
-    await Provider.deleteOne({_id: mongoose.Types.ObjectId(req.user._id)})
+    await Provider.deleteOne({ _id: mongoose.Types.ObjectId(req.user._id) })
         .then(del => {
             res.status(200).send(del)
         })
@@ -92,8 +92,8 @@ app.delete('api/del-provider', async (req, res) => {
 });
 
 app.post('api/update-provider/:id', async (req, res) => { //adds new patient to the provider
-    const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
-    const profile = await Profile.findOne({_id: mongoose.Types.ObjectId(req.params.id)});
+    const provider = await Provider.updateOne({ _id: req.user._id }, { name: req.body.name, email: req.body.email, phone: req.body.phone });
+    const profile = await Profile.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
     provider.profiles.push(profile);
     profile.provider_id = provider;
     provider.markModified("profiles");
@@ -105,7 +105,7 @@ app.post('api/update-provider/:id', async (req, res) => { //adds new patient to 
 });
 
 app.get('api/get-patients-provider/:id', async (req, res) => {
-    await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
+    await (Provider.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })).profiles
         .then(profiles => {
             res.status(200).send(profiles);
         })

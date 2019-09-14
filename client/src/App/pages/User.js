@@ -12,19 +12,28 @@ import Button from 'antd/lib/button';
 import Profile from './Profile';
 
 
-
-
 class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.id,
             data_source: {}
         };
+        user_data = {};
+        fetch("api/get-provider-id").then(response => {
+            if (response.status !== 200) {
+                console.log("Error communicating with database, error " + response.data);
+                return;
+            }
+            response.json.then(data => {
 
-        //Sample data source
-        this.data_source = [{ name: "poopie", age: 22, id: 12345 }];
+            });
+        }
+        );
+
 
     }
+
 
     render() {
 
