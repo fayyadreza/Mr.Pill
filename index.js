@@ -104,16 +104,6 @@ app.post('api/update-provider/:id', async (req, res) => { //adds new patient to 
     else res.status(400).send(err);
 });
 
-app.get('api/get-patients-provider/:id', async (req, res) => {
-    await (Provider.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })).profiles
-        .then(profiles => {
-            res.status(200).send(profiles);
-        })
-        .catch(err => {
-            res.status(400).send(err);
-        });
-});
-
 const port = process.env.PORT || 5000;
 app.listen(port);
 
@@ -161,5 +151,44 @@ app.delete('/api/profile', async (req, res) => {
             res.status(400).send(err);
         });
 });
+
+app.put('/api/decrement-dosage', async (req, res) => {
+    const medication = await Medication.findOne({ _id: req.body.medicationId });
+    if (medication.current_size >= medication.dosage.amount)
+        medication.current_size -= medication.dosage.amount;
+    //reminder?
+    med.markModified("current_size");
+    await med.save()
+        .then(med => {
+            res.status(200).send(med);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+app.delete('/api/delete-med', async (req, res) => {
+    const med = await Medication.findOne({ _id: req.body.medicationId });
+    const dosage = med.dosage;
+    const profile = await Profile.findOne({ _id: mongoose.Types.ObjectId(med.provider_id) });
+    profile.medications = profile.medications.filter(medId => !medId.equals(med._id)); //this should work
+    await Dosage.deleteOne({ _id: dosage._id }).save();
+    await Medication.deleteOne({ _id: med._id }).save()
+        .then(med => {
+            res.status(200).send(med);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+// Reminders that Google Home will provide to the patient to refill prescription
+async function reminder(medicationId) {
+    const med = await Medication.findOne({ _id: mongoose.Types.ObjectId(medicationId) });
+    if (med.dosage === 5) return "You now have 5 dosages left. Prepare to refill soon!";
+    else if (med.dosage === 0) return "You now have 0 dosages left. Please refill your prescription or delete the medication from your account";
+}
+
+
 
 console.log('App is listening on port ' + port);
