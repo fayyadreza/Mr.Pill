@@ -19,7 +19,7 @@ class User extends Component {
             id: props.id,
             data_source: {}
         };
-        user_data = {};
+        let user_data = {};
         fetch("api/get-provider-id").then(response => {
             if (response.status !== 200) {
                 console.log("Error communicating with database, error " + response.data);
