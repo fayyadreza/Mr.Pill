@@ -60,9 +60,6 @@ const Dosage = mongoose.model('Dosage', dosageSchema, "Dosages");
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const Provider = mongoose.model('Provider', providerSchema, "Providers");
-const Profile = mongoose.model('Profile', profileSchema, "Profiles");
-
 app.post('/api/provider-create', async (req, res) => {
     console.log("asd");
     if (await Provider.findOne({email: req.body.email})) res.status(400).send();
