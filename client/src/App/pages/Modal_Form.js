@@ -27,7 +27,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('time')(<Input />)}
             </Form.Item>
             <Form.Item label="Current Size">
-              {getFieldDecorator('current_size')(<Input value={number} />)}
+              {getFieldDecorator('current_size')(<Input />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -72,7 +72,7 @@ class CollectionsPage extends React.Component {
               name: values.name,
               illness: values.illness,
               dosage: { time: values.time, amount: 1 },
-              current_size: values.current_size,
+              current_size: parseInt(values.current_size),
               history: { status: false, updated_at: Date.now }
           }
       }
