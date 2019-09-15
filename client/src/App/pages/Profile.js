@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { checkPropTypes } from 'prop-types';
-import Create_Medication from './Create_Medication.js';
+import ModalForm from './Modal_Form.js';
 import 'antd/dist/antd.css';
 import './main.css';
 import Table from 'antd/lib/table/Table';
@@ -89,7 +89,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
-                                <Create_Medication profile={ this.state.id } />
+                                <ModalForm fields={ this.state.id } />
                             </div>
                         </Content>
                         <Sider />
