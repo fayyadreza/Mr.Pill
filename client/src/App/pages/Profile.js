@@ -48,7 +48,7 @@ class Profile extends Component {
     };
   }
   fetchTableProps(id) {
-    fetch("api/profile/" + id).then(
+    fetch("api/profile/" + this.state.id).then(
       response => {
         console.log("response", response);
         response.json().then(data => {
@@ -93,7 +93,7 @@ class Profile extends Component {
                 title=""
                 key="update"
                 render={() => (
-                  <Button type="primary" onClick={this.fetchTableProps()}>
+                  <Button type="primary" onClick={this.fetchTableProps}>
                     Update
                   </Button>
                 )}
