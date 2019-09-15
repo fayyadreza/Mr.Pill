@@ -185,11 +185,18 @@ app.put('/api/decrement-dosage', async (req, res) => {
         .then(medication => {
             const amount = req.body.amount;
             if (medication.current_size >= medication.dosage.amount) {
-                (profile.medications.filter(medId => !medId.equals(med._id))).current_size -= amount;//this should work
+                for (const med of profile.medications)  {
+                    if ((med._id).equals(req.body.medicationId))    {
+                        med.current_size -= amount;
+                        break;
+                    }
+                }
+                // (profile.medications.filter(medId => !medId.equals(med._id))).current_size -= amount;//this should work
                 medication.current_size -= amount;
             } else {
                 medication.status = true;
             }
+            profile.save();
             medication.markModified("current_size");
             medication.save();
             res.status(200).send(medication);
