@@ -26,7 +26,7 @@ class Profile extends Component {
 
         fetch("https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694").then(response =>
             response.json().then(data => this.data.source = { id: data.id, medications: medications, }));
-        //Sample data source
+
 
     }
 
@@ -56,10 +56,12 @@ class Profile extends Component {
                                     key="update" render={() => <Button type='primary'>Decrement</Button>} />
                             </Table>
                         </div>
+
+                        <Button></Button>
                     </Content>
                     <Sider />
                 </Layout>
-            </body>
+            </body >
         );
     }
 }
