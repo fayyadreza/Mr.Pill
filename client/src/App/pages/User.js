@@ -27,8 +27,8 @@ class User extends Component {
                 return;
             }
             response.json().then(data => {
-                console.log(response);
-                this.state.data_source = { name: response.name, email: response.email, phone: response.phone };
+                console.log(data);
+                this.state.data_source = { name: data.name, email: data.email, phone: data.phone };
             });
         }
         );
