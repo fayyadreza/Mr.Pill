@@ -3,14 +3,13 @@
 // import Form from 'antd/lib/form';
 // import Input from 'antd/lib/input';
 //
-// class Create_Medication extends Component {
+// class Create_Patient extends Component {
 //     constructor(props) {
 //         super(props);
 //         state = {
 //             ModalText: 'Please Enter The Information For The New Medication',
 //             visible: false,
 //             confirmLoading: false,
-//             id: this.props.id
 //         };
 //
 //         showModal = () => {
@@ -39,16 +38,14 @@
 //         return (
 //             <h1>Enter Information For New Medication</h1>
 //             <span>
-//                 <Form layout="inline" onSubmit={}>
+//             <Form layout="inline" onSubmit={}>
 //
-//                 </Form>
-//             </span>
-//
-//
+//             </Form>
+//     </span>
 //
 //
-//          );
+//
+//
+//     );
 //     }
-// }
-//
-// export default Create_Medication;
+//     }
