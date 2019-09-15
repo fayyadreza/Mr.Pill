@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { checkPropTypes } from 'prop-types';
+import Create_Medication from 'Create_Medication.js';
 import 'antd/dist/antd.css';
 import './main.css';
 import Table from 'antd/lib/table/Table';
@@ -22,14 +23,14 @@ class Profile extends Component {
             data_source: user_info.medications
         };
 
-        var fetchTableProps = function (id) {
+        var fetchTableProps = function () {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/profile/" + this.state.id
             ).then(response =>
                 response.json().then(
                     data => {
                         if (data) {
-                          this.setState({ data_source: data.medications });
+                            this.setState({ data_source: data.medications });
                         }
                     }
                 )
@@ -88,6 +89,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
+                                <Create_Medication id={this.state.id} />
                             </div>
                         </Content>
                         <Sider />

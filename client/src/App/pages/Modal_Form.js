@@ -67,4 +67,4 @@ class Modal_Form extends Component {
     }
 }
 
-export default Create_Medication;
+export default Modal_Form;
