@@ -115,34 +115,34 @@ app.listen(port);
 
 // CREATE
 app.post('/api/profile', async (req, res) => {
-  let profile = new Profile(req.body.profile);
-  await profile.save();
-  await Provider.findById(req.body.profile.provider_id)
-    .then((p) => {
-      p.profiles.push(profile);
-      p.markModified('profiles');
-      p.save();
-      res.status(200).end(profile);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    let profile = new Profile(req.body.profile);
+    await profile.save();
+    await Provider.findById(req.body.profile.provider_id)
+        .then((p) => {
+            p.profiles.push(profile);
+            p.markModified('profiles');
+            p.save();
+            res.status(200).end(profile);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // PUT
 app.put('/api/profile/', async (req, res) => {
-  let med = new Medication(req.body.medication)
-  await med.save();
-  await Profile.findById(req.body.id)
-    .then((profile) => {
-      profile.medications.push(med);
-      profile.markModified('medications');
-      profile.save();
-      res.status(200).send(profile);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    let med = new Medication(req.body.medication)
+    await med.save();
+    await Profile.findById(req.body.id)
+        .then((profile) => {
+            profile.medications.push(med);
+            profile.markModified('medications');
+            profile.save();
+            res.status(200).send(profile);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // GET
@@ -180,21 +180,23 @@ app.delete('/api/profile', async (req, res) => {
 // Medication endpoints
 
 app.put('/api/decrement-dosage', async (req, res) => {
+    const profile = await Profile.findById({_id: req.user._id});
     await Medication.findById(req.body.medicationId)
-    .then(medication => {
-      const amount = req.body.amount;
-      if (medication.current_size >= medication.dosage.amount) {
-        medication.current_size -= amount;
-      } else {
-        medication.status = true;
-      }
-      medication.markModified("current_size");
-      medication.save();
-      res.status(200).send(medication);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+        .then(medication => {
+            const amount = req.body.amount;
+            if (medication.current_size >= medication.dosage.amount) {
+                (profile.medications.filter(medId => !medId.equals(med._id))).current_size -= amount;//this should work
+                medication.current_size -= amount;
+            } else {
+                medication.status = true;
+            }
+            medication.markModified("current_size");
+            medication.save();
+            res.status(200).send(medication);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 app.delete('/api/delete-med', async (req, res) => {
