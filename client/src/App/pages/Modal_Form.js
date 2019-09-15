@@ -79,7 +79,7 @@ class CollectionsPage extends React.Component {
       console.log(med);
 
       let headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       }
 
       let data = {
