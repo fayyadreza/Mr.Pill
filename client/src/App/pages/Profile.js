@@ -21,7 +21,7 @@ class Profile extends Component {
             data_source: {}
         };
 
-        var fetchTableProps = function () {
+        var fetchTableProps = function (id) {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694"
             ).then(response =>
@@ -38,6 +38,7 @@ class Profile extends Component {
                 )
             );
         }
+        fetchTableProps(this.state.id);
 
         var handleDecrement = function (id) {
             fetch(
