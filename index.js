@@ -200,6 +200,7 @@ app.delete("/api/profile", async (req, res) => {
 // Medication endpoints
 
 app.put("/api/decrement-dosage", async (req, res) => {
+    console.log(Date.now + " 203 " + req);
     const profile = await Profile.findById(req.body.user_id);
     console.log(Date.now + " 204 " + profile);
     await Medication.findById(req.body.medicationId)
