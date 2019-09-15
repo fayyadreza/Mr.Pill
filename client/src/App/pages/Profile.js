@@ -53,16 +53,13 @@ class Profile extends Component {
 
     render() {
         return (
-            <Layout>
-                <Row gutter={16}>
-                    <Col span={18}>
+                <Row type="flex" justify="center">
+                    <Col span={22}>
                         <h1>This is the profile of {this.state.name} </h1>
                         <h2>Current Medications</h2>
 
-                        <Sider />
-                        <Content>
                             <div classname="meds-table">
-                                <Table dataSource={this.data_source} size="small" rowkey="id">
+                                <Table dataSource={this.data_source} size="small" rowKey="_id">
                                     <Column title="Name" dataIndex="name" key="name" />
                                     <Column
                                         title="Condition"
@@ -91,11 +88,8 @@ class Profile extends Component {
                                 </Table>
                                 <CollectionsPage fields={ this.state.id } />
                             </div>
-                        </Content>
-                        <Sider />
                     </Col>
                 </Row>
-            </Layout>
         );
     }
 }

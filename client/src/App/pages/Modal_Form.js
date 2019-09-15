@@ -88,7 +88,7 @@ class CollectionsPage extends React.Component {
           body: med
       }
 
-      let url = "http://hackthenorth2019.herokuapp.com/api/profile"
+      const url = "https://hackthenorth2019.herokuapp.com/api/profile"
 
       fetch(url, data).then(r => console.log(r))
       form.resetFields();
