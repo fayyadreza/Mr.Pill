@@ -23,22 +23,19 @@ class Profile extends Component {
             data_source: user_info.medications
         };
 
-        var fetchTableProps = function (id) {
-            fetch(
-                "https://hackthenorth2019.herokuapp.com/api/profile/" + id
-            ).then(response => {
-                  console.log('response', response);
-                  response.json().then(
-                      data => {
-                          if (data) {
-                              this.setState({ data_source: data.medications });
-                          }
+        fetch(
+            "https://hackthenorth2019.herokuapp.com/api/profile/" + this.state.id
+        ).then(response => {
+              console.log('response', response);
+              response.json().then(
+                  data => {
+                      if (data) {
+                          this.setState({ data_source: data.medications });
                       }
-                  )
-               }
-            );
-        }
-        fetchTableProps(this.state.id); 
+                  }
+              )
+           }
+        );
         var handleDecrement = function (id) {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/decrement-dosage" + id
@@ -51,6 +48,22 @@ class Profile extends Component {
         }
 
     }
+    fetchTableProps (id) {
+        fetch(
+            "https://hackthenorth2019.herokuapp.com/api/profile/" + id
+        ).then(response => {
+              console.log('response', response);
+              response.json().then(
+                  data => {
+                      if (data) {
+                          this.setState({ data_source: data.medications });
+                      }
+                  }
+              )
+           }
+        );
+    }
+
 
     render() {
         return (
