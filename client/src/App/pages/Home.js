@@ -8,7 +8,7 @@ class Home extends Component {
   render() {
     return (
       <div className="App">
-          <Row type="flex" justify="center" align="center">
+          <Row type="flex" justify="center" align="middle">
             <Col span={20}>
               <Card style={{ width: 500 }}>
                 <h1>Welcome to Prescription Assistant</h1>

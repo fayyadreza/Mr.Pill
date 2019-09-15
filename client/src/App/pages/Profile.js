@@ -14,25 +14,22 @@ import { Row, Col } from 'antd';
 class Profile extends Component {
     constructor(props) {
         super(props);
-        let user_info = props.location.state.uid;
+        let user_info = props.location.state;
+        console.log(user_info);
         this.state = {
             name: user_info.name,
-            id: user_info.id,
-            data_source: {}
+            id: user_info._id,
+            data_source: user_info.medications
         };
 
         var fetchTableProps = function () {
             fetch(
-                "https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694"
+                "https://hackthenorth2019.herokuapp.com/api/profile/" + this.state.id
             ).then(response =>
                 response.json().then(
                     data => {
                         if (data) {
-                            (this.state.data_source = {
-                                id: data.id,
-                                name: data.name,
-                                medications: data.medications
-                            })
+                          this.setState({ data_source: data.medications });
                         }
                     }
                 )
@@ -54,50 +51,48 @@ class Profile extends Component {
 
     render() {
         return (
-            <body>
-                <Layout>
-                    <Row gutter={16}>
-                        <Col span={18}>
-                            <h1>This is the profile of {this.state.name} </h1>
-                            <h2>Current Medications</h2>
+            <Layout>
+                <Row gutter={16}>
+                    <Col span={18}>
+                        <h1>This is the profile of {this.state.name} </h1>
+                        <h2>Current Medications</h2>
 
-                            <Sider />
-                            <Content>
-                                <div classname="meds-table">
-                                    <Table dataSource={this.data_source} size="small" rowkey="id">
-                                        <Column title="Name" dataIndex="name" key="name" />
-                                        <Column
-                                            title="Condition"
-                                            dataIndex="condition"
-                                            key="condition"
-                                        />
-                                        <Column title="Dosage" dataIndex="dosage" />
-                                        <Column title="Time" dataIndex="time" key="time" />
-                                        <Column
-                                            title="Amount Remaining"
-                                            dataIndex="amount_remaining"
-                                            key="amount_remaining"
-                                        />
+                        <Sider />
+                        <Content>
+                            <div classname="meds-table">
+                                <Table dataSource={this.data_source} size="small" rowkey="id">
+                                    <Column title="Name" dataIndex="name" key="name" />
+                                    <Column
+                                        title="Condition"
+                                        dataIndex="condition"
+                                        key="condition"
+                                    />
+                                    <Column title="Dosage" dataIndex="dosage" />
+                                    <Column title="Time" dataIndex="time" key="time" />
+                                    <Column
+                                        title="Amount Remaining"
+                                        dataIndex="amount_remaining"
+                                        key="amount_remaining"
+                                    />
 
-                                        {/* <Column
-                                    title=""
-                                    key="remove"
-                                    render={() => <Button type="danger">Remove</Button>}
-                                /> */}
+                                    {/* <Column
+                                title=""
+                                key="remove"
+                                render={() => <Button type="danger">Remove</Button>}
+                            /> */}
 
-                                        <Column
-                                            title=""
-                                            key="update"
-                                            render={() => <Button type="primary" onClick={this.handleDecrement()}>Decrement</Button>}
-                                        />
-                                    </Table>
-                                </div>
-                            </Content>
-                            <Sider />
-                        </Col>
-                    </Row>
-                </Layout>
-            </body>
+                                    <Column
+                                        title=""
+                                        key="update"
+                                        render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
+                                    />
+                                </Table>
+                            </div>
+                        </Content>
+                        <Sider />
+                    </Col>
+                </Row>
+            </Layout>
         );
     }
 }
