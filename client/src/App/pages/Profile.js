@@ -21,15 +21,22 @@ class Profile extends Component {
             data_source: {}
         };
 
-
-        fetch("https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694").then(response =>
-            response.json().then(data => this.data.source = { id: data.id, medications: data.medications, }));
+        fetch(
+            "https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694"
+        ).then(response =>
+            response.json().then(
+                data =>
+                    (this.data.source = {
+                        id: data.id,
+                        name: data.name,
+                        medications: data.medications
+                    })
+            )
+        );
         //Sample data source
-
     }
 
     render() {
-
         return (
             <body>
                 <Row gutter={16}>
