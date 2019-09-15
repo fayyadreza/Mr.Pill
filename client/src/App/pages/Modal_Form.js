@@ -15,13 +15,29 @@ class Modal_Form extends Component {
         var handleCreate = function (id, name, illness, time, current_size, e) {
             med = {
                 id: id,
-                status: false,
-                name: name,
-                illness: illness,
-                dosage: { time: time, amount: 1 },
-                current_size: current_size,
-                history: { status: false, updated_at: Date.now }
+                medication: {
+                    status: false,
+                    name: name,
+                    illness: illness,
+                    dosage: { time: time, amount: 1 },
+                    current_size: current_size,
+                    history: { status: false, updated_at: Date.now }
+                }
             }
+
+            headers = {
+                'Content-type': 'application/json',
+            }
+
+            data = {
+                method: "PUT",
+                header: headers,
+                body: med
+            }
+
+            url = "https://hackthenorth2019.herokuapp.com/"
+
+            fetch(url, data).then(r => console.log(r))
 
         }
 
