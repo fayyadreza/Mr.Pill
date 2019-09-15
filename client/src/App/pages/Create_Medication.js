@@ -56,7 +56,7 @@ class Create_Medication extends Component {
                     onOk={this.handleCreate}
                     confirmLoading={confirmLoading}
                     onCancel={this.handleCancel}
-                    <Modal_Form fields={[{ "name": "" }, { "illness": "" }, { "dosage_time": "" }, { "amount": "" }, { "current_size": 0 }]} />
+                    <Modal_Form fields={this.state.id} />
                 </Modal>
             </div>
 
