@@ -21,20 +21,17 @@ class User extends Component {
             data_source: {}
         };
 
-        let user_data = {};
         fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
             if (response.status !== 200) {
                 console.log("Error communicating with database, error " + response.data);
                 return;
             }
-            response.json.then(data => {
+            response.json().then(data => {
                 console.log(response);
-                user_data = response;
+                this.state.data_source = { name: response.name, email: response.email, phone: response.phone };
             });
         }
         );
-
-
     }
 
 
