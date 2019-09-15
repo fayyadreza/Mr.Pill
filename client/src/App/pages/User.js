@@ -10,6 +10,8 @@ import Content from 'antd/lib/layout';
 import Layout from 'antd/lib/layout';
 import Button from 'antd/lib/button';
 import Profile from './Profile';
+import { Row, Col } from 'antd';
+import { Badge } from 'antd';
 
 
 class User extends Component {
@@ -22,6 +24,19 @@ class User extends Component {
         };
 
 
+
+        fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
+            console.log(response);
+            if (response.status != 200) {
+                console.log("Error communicating with database, error " + response.data);
+                return;
+            }
+            response.json().then(data => {
+                console.log(data);
+                this.setState({ data_source: data.profiles });
+            });
+        }
+        );
     }
 
 
@@ -41,13 +56,17 @@ class User extends Component {
         }
         return (
             <body>
-                <Layout>
-                    <h1>Welcome</h1>
-                    <h2><u>Your Patients</u></h2>
-                    <Sider />
-                    <Content>
+                <Row gutter={16} type="flex" justify="center">
+                    <Col span={22}>
+                        <br></br>
+                        <br></br>
+                        <div style={{ dplsay: 'inline-block' }}>
+                            <h2>Your Patients
+                          <Badge status="processing" style={{ marginLeft: '10px' }} />
+                            </h2>
+                        </div>
                         <div classname='meds-table'>
-                            <Table dataSource={SetState(this.data_source} size="small" rowKey="uid">
+                            <Table dataSource={this.state.data_source} size="small" rowKey="uid">
                                 <Column title="Name" dataIndex="name" />
                                 <Column title="Age" dataIndex="age" />
                                 <Column title="Id" dataIndex="id" />
@@ -56,9 +75,8 @@ class User extends Component {
                                     render={(id, name) => <Button type='primary'><Link to={{ pathname: '/profile', state: { uid: id, name: name }, Component: { Profile } }} > View Profile </Link></Button>} />
                             </Table>
                         </div>
-                    </Content>
-                    <Sider />
-                </Layout>
+                    </Col>
+                </Row>
             </body>
         );
     }
