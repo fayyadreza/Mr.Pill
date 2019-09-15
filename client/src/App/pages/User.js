@@ -33,7 +33,7 @@ class User extends Component {
             }
             response.json().then(data => {
               console.log(data);
-                this.setState({ data_source: {  }});
+                this.setState({ data_source: { data.profiles }});
             });
         }
         );
