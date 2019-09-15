@@ -64,7 +64,7 @@ class Profile extends Component {
       method: "DELETE",
       headers: "Content-Type: application/json",
       body: JSON.stringify({ id: record._id })
-    }).then(this.fetchTableProps(););
+    }).then(this.fetchTableProps());
   };
 
   render() {
