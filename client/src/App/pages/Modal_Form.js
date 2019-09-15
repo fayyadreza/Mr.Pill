@@ -8,18 +8,23 @@ class Modal_Form extends Component {
     constructor(props) {
         super(props);
         state = {
-            form_fields: this.props.fields
+            id: this.props.id
         };
 
 
-        handleCreate = e => {
-            e.preventDefault();
-            this.props.form.validateFieldsAndScroll((err, values) => {
-                if (!err) {
-                    handleCancel()
-                }
-            });
-        };
+        var handleCreate = function (id, name, illness, time, current_size, e) {
+            med = {
+                id: id,
+                status: false,
+                name: name,
+                illness: illness,
+                dosage: { time: time, amount: 1 },
+                current_size: current_size,
+                history: { status: false, updated_at: Date.now }
+            }
+
+        }
+
 
 
 
@@ -27,25 +32,17 @@ class Modal_Form extends Component {
     }
 
     render() {
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-        };
-
-
         return (
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                Sample Text
-            </Form>
-
-
-
+            <input type="text" placeholder="Name" id="name" />
+            <input type="text" placeholder="Condition" id="illness" />
+            <input type="text" placeholder="Dosage Time" id="time" />
+            <input type="text" placeholder="Amount of Medication" id="current_size" />
+            <Button type="Primary" onClick={this.handleCreate(
+                (document.getElementById("name").innerText),
+                (document.getElementById("illness").innerText),
+                (document.getElementById("time").innerText),
+                (document.getElementById("current_size").innerText)
+            )}>Submit</Button>
 
 
 
