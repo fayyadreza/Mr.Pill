@@ -11,7 +11,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// MODELS
+// MODELS 
 var dosageSchema = new mongoose.Schema({
     time: String,
     amount: Number }); var usageHistorySchema = new mongoose.Schema({
@@ -66,7 +66,7 @@ app.post('/api/provider-create', async (req, res) => {
 app.get('/api/get-provider/:id', async (req, res) => {
     await Provider.findById(req.params.id).lean().exec()
         .then(provider => {
-            res.status(200).send(JSON.stringify(provider));
+            res.status(200).send(provider);
         })
         .catch(err => {
             res.status(400).send(err);
@@ -76,10 +76,10 @@ app.get('/api/get-provider/:id', async (req, res) => {
 app.delete('/api/del-provider', async (req, res) => {
     await Provider.findByIdAndRemove(req.user._id)
         .then(del => {
-            res.status(200).send(JSON.stringify(del))
+            res.status(200).send(del);
         })
         .catch(err => {
-            res.status(400).send(err)
+            res.status(400).send(err);
         });
 });
 
@@ -88,7 +88,7 @@ app.post('/api/update-provider/:id', async (req, res) => { //adds new patient to
    provider.markModified("profiles");
    await provider.save()
      .then(p => {
-       res.status(200).send(JSON.stringify(p));
+       res.status(200).send(p);
      })
      .catch(err => {
        res.status(400).send(err);
@@ -98,7 +98,7 @@ app.post('/api/update-provider/:id', async (req, res) => { //adds new patient to
 app.get('/api/get-patients-provider/:id', async (req, res) => {
    await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
        .then(profiles => {
-           res.status(200).send(JSON.stringify(profiles));
+           res.status(200).send(profiles);
        })
        .catch(err => {
            res.status(400).send(err);
@@ -114,11 +114,11 @@ app.listen(port);
 app.post('/api/profile', async (req, res) => {
   let profile = new Profile(req.body.profile);
   await profile.save()
+  await Provider.findById(req.body.profile.provider_id)
     .then((p) => {
-      let provider = Provider.findById(req.body.profile.provider_id)
-      provider.profiles.push(profile);
-      provider.save();
-      res.status(200).end(JSON.stringify(p));
+      p.profiles.push(profile);
+      p.save();
+      res.status(200).end(profile);
     })
     .catch(err => {
       res.status(400).send(err);
@@ -132,7 +132,7 @@ app.put('/api/profile/', async (req, res) => {
       profile.medications.push(new Medication(req.body.medication));
       profile.markModified('medications');
       profile.save();
-      res.status(200).send(JSON.stringify(profile));
+      res.status(200).send(profile);
     })
     .catch(err => {
       res.status(400).send(err);
@@ -143,7 +143,7 @@ app.put('/api/profile/', async (req, res) => {
 app.get('/api/profile/:id', async (req, res) => {
   await Profile.findById(req.params.id).lean().exec()
     .then((p) => {
-      res.status(200).send(JSON.stringify(p));
+      res.status(200).send(p);
     })
     .catch((err) => {
       res.status(400).send(err);
@@ -153,7 +153,7 @@ app.get('/api/profile/:id', async (req, res) => {
 app.get('/api/get-profile-by-email/:email', async (req, res) => {
   await Profile.findOne({ email: req.params.email }).lean().exec()
     .then((p) => {
-      res.status(200).send(JSON.stringify(p));
+      res.status(200).send(p);
     })
     .catch((err) => {
       res.status(400).send(err);
@@ -164,7 +164,7 @@ app.get('/api/get-profile-by-email/:email', async (req, res) => {
 app.delete('/api/profile', async (req, res) => {
   await Profile.findByIdAndRemove(req.body.id)
     .then(p => {
-      res.status(200).send(JSON.stringify(p));
+      res.status(200).send(p);
     })
     .catch(err => {
       res.status(400).send(err);
@@ -175,8 +175,9 @@ app.delete('/api/profile', async (req, res) => {
 
 app.put('/api/decrement-dosage', async (req, res) => {
     const medication = await Medication.findOne({ _id: req.body.medicationId });
+    const amount = req.body.amount;
     if (medication.current_size >= medication.dosage.amount)
-        medication.current_size -= medication.dosage.amount;
+        Math.max(medication.current_size -= amount, 0);
     //reminder?
     med.markModified("current_size");
     await med.save()
