@@ -26,15 +26,16 @@ class Profile extends Component {
         var fetchTableProps = function (id) {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/profile/" + id
-            ).then(response =>
-              console.log('response', response);
-                response.json().then(
-                    data => {
-                        if (data) {
-                            this.setState({ data_source: data.medications });
-                        }
-                    }
-                )
+            ).then(response => {
+                  console.log('response', response);
+                  response.json().then(
+                      data => {
+                          if (data) {
+                              this.setState({ data_source: data.medications });
+                          }
+                      }
+                  )
+               }
             );
         }
         fetchTableProps(this.state.id); 
