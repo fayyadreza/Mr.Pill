@@ -20,12 +20,10 @@ class User extends Component {
         console.log(props);
         super(props);
         this.state = {
-            data_source: {}
+            data_source: []
         };
 
-
-
-        fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
+        fetch("api/get-provider/5d7d5c5826eb0d1e9010264e").then(response => {
             console.log(response);
             if (response.status != 200) {
                 console.log("Error communicating with database, error " + response.data);
@@ -33,7 +31,7 @@ class User extends Component {
             }
             response.json().then(data => {
               console.log(data);
-                this.setState({ data_source: data.profiles });
+              this.setState({ data_source: data.profiles });
             });
         }
         );
@@ -54,13 +52,13 @@ class User extends Component {
                        </h2>
                     </div>
                         <div classname='meds-table'>
-                            <Table dataSource={this.state.data_source} size="small" rowKey="uid">
+                            <Table dataSource={this.state.data_source} size="small" rowKey="_id">
                                 <Column title="Name" dataIndex="name" />
                                 <Column title="Age" dataIndex="age" />
-                                <Column title="Id" dataIndex="id" />
+                                <Column title="Email" dataIndex="email" />
                                 <Column
                                     title=""
-                                    render={(id, name) => <Button type='primary'><Link to={{ pathname: '/profile', state: { uid: id, name: name }, Component: { Profile } }} > View Profile </Link></Button>} />
+                                    render={(id, name) => <Button type='primary'><Link to={{ pathname: '/profile', state: { _id: id, name: name }, Component: { Profile } }} > View Profile </Link></Button>} />
                             </Table>
                         </div>
                     </Col>
