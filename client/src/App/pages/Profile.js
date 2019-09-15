@@ -86,13 +86,6 @@ class Profile extends Component {
                 title="Amount Remaining"
                 dataIndex="current_size"
               />
-
-              {/* <Column
-                                title=""
-                                key="remove"
-                                render={() => <Button type="danger">Remove</Button>}
-                            /> */}
-
               <Column
                 title=""
                 key="update"
@@ -108,6 +101,7 @@ class Profile extends Component {
                 render={(text, record) => (
                   <Button type="danger" onClick={() => this.removeMedication(record)}>Remove</Button>
                 )}
+              />
             </Table>
             <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
           </div>
