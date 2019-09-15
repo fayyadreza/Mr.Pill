@@ -105,6 +105,7 @@ class Profile extends Component {
                   Update
                 </Button>
               </Col>
+            </Row>
           </div>
         </Col>
       </Row>
