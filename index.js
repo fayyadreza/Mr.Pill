@@ -146,7 +146,7 @@ app.post("/api/profile", async (req, res) => {
 });
 
 // PUT
-app.put("/api/profile/", async (req, res) => {
+app.put("/api/profile", async (req, res) => {
     let med = new Medication(req.body.medication);
     await med.save();
     await Profile.findById(req.body.id)

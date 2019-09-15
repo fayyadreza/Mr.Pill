@@ -1,68 +1,120 @@
 import React, { Component } from 'react';
-import Modal from 'antd/lib/modal';
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
-import Button from 'antd/lib/input';
+import { Button, Modal, Form, Input, Radio } from 'antd';
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+  // eslint-disable-next-line
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Add a new medication"
+          okText="Add"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+            <Form.Item label="Name">
+              {getFieldDecorator('name', {
+                rules: [{ required: true, message: 'Please input the name of the medication!' }],
+              })(<Input />)}
+            </Form.Item>
+            <Form.Item label="Illness">
+              {getFieldDecorator('illness')(<Input />)}
+            </Form.Item>
+            <Form.Item label="Time">
+              {getFieldDecorator('time')(<Input />)}
+            </Form.Item>
+            <Form.Item label="Current Size">
+              {getFieldDecorator('current_size')(<Input />)}
+            </Form.Item>
+          </Form>
+        </Modal>
+      );
+    }
+  },
+);
 
-class Modal_Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: this.props.id
-        };
+class CollectionsPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.profile
+    };
+  };
 
+  state = {
+    visible: false,
+  };
 
-        var handleCreate = function () {
-          let id = this.state.id; 
-          let name = this.refs.name.value;
-          let illness = this.refs.illness.value;
-          let time = this.refs.time.value;
-          let current_size = this.refs.current_size.value;
-          let med = {
-              id: id,
-              medication: {
-                  status: false,
-                  name: name,
-                  illness: illness,
-                  dosage: { time: time, amount: 1 },
-                  current_size: current_size,
-                  history: { status: false, updated_at: Date.now }
-              }
-          }
+  showModal = () => {
+    this.setState({ visible: true });
+  };
 
-          let headers = {
-              'Content-type': 'application/json',
-          }
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
 
-          let data = {
-              method: "PUT",
-              header: headers,
-              body: med
-          }
-
-          let url = "https://hackthenorth2019.herokuapp.com/"
-
-          fetch(url, data).then(r => console.log(r))
-
+  handleCreate = () => {
+    const { form } = this.formRef.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
       }
 
+      values.id = this.state.id;
 
+      console.log('Received values of form: ', values);
+      let med = {
+          id: values.id,
+          medication: {
+              status: false,
+              name: values.name,
+              illness: values.illness,
+              dosage: { time: values.time, amount: 1 },
+              current_size: values.current_size,
+              history: { status: false, updated_at: Date.now }
+          }
+      }
 
+      let headers = {
+          'Content-type': 'application/json',
+      }
 
+      let data = {
+          method: "PUT",
+          header: headers,
+          body: med
+      }
 
-    }
+      let url = "http://hackthenorth2019.herokuapp.com/api/profile"
 
-    render() {
-        return (
-          <div>
-            <input type="text" placeholder="Name" ref="name" />
-            <input type="text" placeholder="Condition" ref="illness" />
-            <input type="text" placeholder="Dosage Time" ref="time" />
-            <input type="text" placeholder="Amount of Medication" ref="current_size" />
-            <Button type="Primary" onClick={this.handleCreate}>Submit</Button>
-          </div>
-        );
-    }
+      fetch(url, data).then(r => console.log(r))
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  };
+
+  saveFormRef = formRef => {
+    this.formRef = formRef;
+  };
+
+  render() {
+    return (
+      <div>
+        <Button type="primary" onClick={this.showModal}>
+          Add Medication
+        </Button>
+        <CollectionCreateForm
+          wrappedComponentRef={this.saveFormRef}
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          onCreate={this.handleCreate}
+        />
+      </div>
+    );
+  }
 }
 
-export default Modal_Form;
+export default CollectionsPage;
