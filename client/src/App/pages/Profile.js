@@ -27,6 +27,7 @@ class Profile extends Component {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/profile/" + id
             ).then(response =>
+              console.log('response', response);
                 response.json().then(
                     data => {
                         if (data) {

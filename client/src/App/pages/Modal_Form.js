@@ -76,9 +76,10 @@ class CollectionsPage extends React.Component {
               history: { status: false, updated_at: Date.now }
           }
       }
+      console.log(med);
 
       let headers = {
-          'Content-type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
 
       let data = {
