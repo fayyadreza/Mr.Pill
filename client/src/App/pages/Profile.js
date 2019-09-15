@@ -89,11 +89,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
-<<<<<<< HEAD
                                 <CollectionsPage fields={ this.state.id } />
-=======
-                                {/* <ModalForm fields={ this.state.id } /> */}
->>>>>>> e2ffb634da8904fab6f188ee9beb6d538c4ed0b8
                             </div>
                         </Content>
                         <Sider />
