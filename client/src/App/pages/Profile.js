@@ -24,6 +24,8 @@ class Profile extends Component {
       data_source: user_info.medications
     };
 
+    console.log(this.state.id);
+
     fetch(
       "api/profile/" + this.state.id
     ).then(response => {
