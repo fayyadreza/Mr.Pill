@@ -201,10 +201,13 @@ app.delete("/api/profile", async (req, res) => {
 
 app.put("/api/decrement-dosage", async (req, res) => {
     const profile = await Profile.findById(req.body.user_id);
+    console.log(Date.now + " 204 " + profile);
     await Medication.findById(req.body.medicationId)
         .then(medication => {
             const amount = req.body.amount;
+            console.log(Date.now + " 207 " + amount);
             if (medication.current_size >= medication.dosage.amount) {
+                console.log(Date.now + " 208 " + medication);
                 for (const med of profile.medications) {
                     console.log(Date.now + " " + med);
                     if (med._id.equals(req.body.medicationId)) {
