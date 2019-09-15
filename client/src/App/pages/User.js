@@ -14,40 +14,40 @@ import Profile from './Profile';
 
 class User extends Component {
     constructor(props) {
-        console.log("PROPS: ");
-        console.log(props);
+        // console.log("PROPS: ");
+        // console.log(props);
         super(props);
         this.state = {
             data_source: {}
         };
 
 
-
-        fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
-            if (response.status !== 200) {
-                console.log("Error communicating with database, error " + response.data);
-                return;
-            }
-            response.json().then(data => {
-                console.log(data);
-                this.state.data_source = { name: data.name, email: data.email, phone: data.phone };
-            });
-        }
-        );
     }
 
 
     render() {
-
+        var fetchTableProps = function () {
+            fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
+                if (response.status !== 200) {
+                    console.log("Error communicating with database, error " + response.data);
+                    return;
+                }
+                response.json().then(data => {
+                    console.log(data);
+                    this.state.data_source = { name: data.name, email: data.email, phone: data.phone };
+                });
+            }
+            );
+        }
         return (
             <body>
                 <Layout>
-                    <h1>Welcome </h1>
+                    <h1>Welcome</h1>
                     <h2><u>Your Patients</u></h2>
                     <Sider />
                     <Content>
                         <div classname='meds-table'>
-                            <Table dataSource={this.data_source} size="small" rowKey="uid">
+                            <Table dataSource={SetState(this.data_source} size="small" rowKey="uid">
                                 <Column title="Name" dataIndex="name" />
                                 <Column title="Age" dataIndex="age" />
                                 <Column title="Id" dataIndex="id" />

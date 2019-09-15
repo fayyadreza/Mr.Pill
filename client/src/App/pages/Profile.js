@@ -20,19 +20,35 @@ class Profile extends Component {
             data_source: {}
         };
 
-        fetch(
-            "https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694"
-        ).then(response =>
-            response.json().then(
-                data =>
-                    (this.data.source = {
-                        id: data.id,
-                        name: data.name,
-                        medications: data.medications
-                    })
-            )
-        );
-        //Sample data source
+        var fetchTableProps = function () {
+            fetch(
+                "https://hackthenorth2019.herokuapp.com/api/profile/5d7d414aeb4c9c0017b7f694"
+            ).then(response =>
+                response.json().then(
+                    data => {
+                        if (data) {
+                            (this.state.data_source = {
+                                id: data.id,
+                                name: data.name,
+                                medications: data.medications
+                            })
+                        }
+                    }
+                )
+            );
+        }
+
+        var handleDecrement = function (id) {
+            fetch(
+                "https://hackthenorth2019.herokuapp.com/api/decrement-dosage" + id
+            ).then(response =>
+                response.json().then(data => {
+                    let id_list = data.data_source.id;
+                    id_list[id_list.find(id)] = id - 1;
+                    this.state.data_source.id = id_list;
+                }));
+        }
+
     }
 
     render() {
@@ -44,14 +60,14 @@ class Profile extends Component {
                     <Sider />
                     <Content>
                         <div classname="meds-table">
-                            <Table dataSource={this.data_source} size="small">
+                            <Table dataSource={this.data_source} size="small" rowkey="id">
                                 <Column title="Name" dataIndex="name" key="name" />
                                 <Column
                                     title="Condition"
                                     dataIndex="condition"
                                     key="condition"
                                 />
-                                <Column title="Dosage" dataIndex="dosage" key="dosage" />
+                                <Column title="Dosage" dataIndex="dosage" />
                                 <Column title="Time" dataIndex="time" key="time" />
                                 <Column
                                     title="Amount Remaining"
@@ -59,16 +75,16 @@ class Profile extends Component {
                                     key="amount_remaining"
                                 />
 
-                                <Column
+                                {/* <Column
                                     title=""
                                     key="remove"
                                     render={() => <Button type="danger">Remove</Button>}
-                                />
+                                /> */}
 
                                 <Column
                                     title=""
                                     key="update"
-                                    render={() => <Button type="primary">Decrement</Button>}
+                                    render={() => <Button type="primary" onClick={this.handleDecrement()}>Decrement</Button>}
                                 />
                             </Table>
                         </div>
