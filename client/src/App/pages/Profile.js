@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { checkPropTypes } from 'prop-types';
-import Create_Medication from 'Create_Medication.js';
+import Create_Medication from './Create_Medication.js';
 import 'antd/dist/antd.css';
 import './main.css';
 import Table from 'antd/lib/table/Table';

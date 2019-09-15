@@ -3,6 +3,7 @@ import Modal from 'antd/lib/modal';
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/input';
+import Modal_Form from './Create_Medication.js';
 
 class Create_Medication extends Component {
     constructor(props) {
