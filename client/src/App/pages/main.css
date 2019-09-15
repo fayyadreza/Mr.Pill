@@ -4,4 +4,7 @@
     width: 100%;
     overflow: hidden;
     background-color: blue;
+},
+.body{
+    margin: 15px;
 }

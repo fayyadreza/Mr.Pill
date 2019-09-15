@@ -9,9 +9,7 @@ import Sider from 'antd/lib/layout';
 import Content from 'antd/lib/layout';
 import Layout from 'antd/lib/layout';
 import Button from 'antd/lib/button';
-
-
-
+import { Row, Col } from 'antd';
 
 class Profile extends Component {
     constructor(props) {
@@ -34,31 +32,29 @@ class Profile extends Component {
 
         return (
             <body>
-                <Layout>
+                <Row gutter={16}>
+                  <Col span={18}>
                     <h1>This is the profile of {this.state.name} </h1>
                     <h2>Current Medications</h2>
-                    <Sider />
-                    <Content>
-                        <div classname='meds-table'>
-                            <Table dataSource={this.data_source} size="small">
-                                <Column title="Name" dataIndex="name" key="name" />
-                                <Column title="Condition" dataIndex="condition" key="condition" />
-                                <Column title="Dosage" dataIndex="dosage" key="dosage" />
-                                <Column title="Time" dataIndex="time" key="time" />
-                                <Column title="Amount Remaining" dataIndex="amount_remaining" key="amount_remaining" />
+                      <div classname='meds-table'>
+                          <Table dataSource={this.data_source} size="small">
+                            <Column title="Name" dataIndex="name" key="name" />
+                            <Column title="Condition" dataIndex="condition" key="condition" />
+                            <Column title="Dosage" dataIndex="dosage" key="dosage" />
+                            <Column title="Time" dataIndex="time" key="time" />
+                            <Column title="Amount Remaining" dataIndex="amount_remaining" key="amount_remaining" />
 
-                                <Column
-                                    title=""
-                                    key="remove" render={() => <Button type='danger'>Remove</Button>} />
+                            <Column
+                                title=""
+                                key="remove" render={() => <Button type='danger'>Remove</Button>} />
 
-                                <Column
-                                    title=""
-                                    key="update" render={() => <Button type='primary'>Decrement</Button>} />
-                            </Table>
-                        </div>
-                    </Content>
-                    <Sider />
-                </Layout>
+                            <Column
+                                title=""
+                                key="update" render={() => <Button type='primary'>Decrement</Button>} />
+                        </Table>
+                      </div>
+                    </Col>
+                </Row>
             </body>
         );
     }

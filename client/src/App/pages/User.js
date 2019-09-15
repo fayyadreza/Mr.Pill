@@ -10,6 +10,8 @@ import Content from 'antd/lib/layout';
 import Layout from 'antd/lib/layout';
 import Button from 'antd/lib/button';
 import Profile from './Profile';
+import { Row, Col } from 'antd';
+import { Badge } from 'antd';
 
 
 class User extends Component {
@@ -27,7 +29,6 @@ class User extends Component {
                 return;
             }
             response.json().then(data => {
-                console.log(data);
                 this.state.data_source = { name: data.name, email: data.email, phone: data.phone };
             });
         }
@@ -39,11 +40,15 @@ class User extends Component {
 
         return (
             <body>
-                <Layout>
-                    <h1>Welcome </h1>
-                    <h2><u>Your Patients</u></h2>
-                    <Sider />
-                    <Content>
+                 <Row gutter={16} type="flex" justify="center">
+                   <Col span={22}>
+                     <br></br>
+                     <br></br>
+                     <div style={{ dplsay: 'inline-block' }}>
+                       <h2>Your Patients   
+                          <Badge status="processing" style={{ marginLeft: '10px' }}/>
+                       </h2>
+                    </div>
                         <div classname='meds-table'>
                             <Table dataSource={this.data_source} size="small" rowKey="uid">
                                 <Column title="Name" dataIndex="name" />
@@ -54,9 +59,8 @@ class User extends Component {
                                     render={(id, name) => <Button type='primary'><Link to={{ pathname: '/profile', state: { uid: id, name: name }, Component: { Profile } }} > View Profile </Link></Button>} />
                             </Table>
                         </div>
-                    </Content>
-                    <Sider />
-                </Layout>
+                    </Col>
+                </Row>
             </body>
         );
     }
