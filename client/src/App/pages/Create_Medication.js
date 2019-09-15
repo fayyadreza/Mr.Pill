@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'antd/lib/modal';
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
+import Button from 'antd/lib/input';
 
 class Create_Medication extends Component {
     constructor(props) {
@@ -32,22 +33,39 @@ class Create_Medication extends Component {
             }, 2000);
         }
 
+        handleCancel = () => {
+            console.log('Clicked cancel button');
+            this.setState({
+                visible: false,
+            });
+        };
+
 
     }
 
     render() {
+        const { visible, confirmLoading, id } = this.state;
         return (
-            <h1>Enter Information For New Medication</h1>
-            <span>
-                <Form layout="inline" onSubmit={}>
+            <div>
+                <Button type="primary" onClick={this.showModal}>
+                    Open Modal with async logic
+            </Button>
+                <Modal>
+                    title="Create New Medication"
+                    visible={visible}
+                    onOk={this.handleCreate}
+                    confirmLoading={confirmLoading}
+                    onCancel={this.handleCancel}
+                    <Modal_Form fields={[{ "name": "" }, { "illness": "" }, { "dosage_time": "" }, { "amount": "" }, { "current_size": 0 }]} />
+                </Modal>
+            </div>
 
-                </Form>
-            </span>
 
 
 
 
-         );
+
+        );
     }
 }
 
