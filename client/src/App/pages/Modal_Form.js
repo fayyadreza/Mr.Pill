@@ -73,7 +73,6 @@ class CollectionsPage extends React.Component {
               illness: values.illness,
               dosage: { time: values.time, amount: 1 },
               current_size: parseInt(values.current_size),
-              history: { status: false, updated_at: Date.now }
           }
       }
       console.log(med);
@@ -83,7 +82,7 @@ class CollectionsPage extends React.Component {
       }
 
       let data = {
-          method: "put",
+          method: "PUT",
           header: headers,
           body: JSON.stringify(med)
       }
