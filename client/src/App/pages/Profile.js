@@ -29,6 +29,7 @@ class Profile extends Component {
               console.log('response', response);
               response.json().then(
                   data => {
+                    console.log(data);
                     this.setState({ data_source: data.medications });
                   }
               )
