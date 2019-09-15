@@ -27,7 +27,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('time')(<Input />)}
             </Form.Item>
             <Form.Item label="Current Size">
-              {getFieldDecorator('current_size')(<Input />)}
+              {getFieldDecorator('current_size')(<Input value={number} />)}
             </Form.Item>
           </Form>
         </Modal>
