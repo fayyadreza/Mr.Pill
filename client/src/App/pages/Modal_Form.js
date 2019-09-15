@@ -40,11 +40,6 @@ class Modal_Form extends Component {
             fetch(url, data).then(r => console.log(r))
 
         }
-
-
-
-
-
     }
 
     render() {
