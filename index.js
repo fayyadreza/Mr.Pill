@@ -206,11 +206,7 @@ app.put("/api/decrement-dosage", async (req, res) => {
             const amount = req.body.amount;
             if (medication.current_size >= medication.dosage.amount) {
                 for (const med of profile.medications) {
-                    //Debug error line
-                    if (!med) {
-                        res.status(305).send(med);
-                        break;
-                    }
+                    console.log(Date.now + " " + med);
                     if (med._id.equals(req.body.medicationId)) {
                         med.current_size -= amount;
                         break;
