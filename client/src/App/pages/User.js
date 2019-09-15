@@ -57,6 +57,7 @@ class User extends Component {
                           <Column title="Name" dataIndex="name" />
                           <Column title="Age" dataIndex="age" />
                           <Column title="Email" dataIndex="email" />
+                          <Column title="Phone" dataIndex="phone" />
                           <Column
                               title=""
                               render={(text, record) => (
