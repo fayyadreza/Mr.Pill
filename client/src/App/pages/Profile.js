@@ -62,7 +62,7 @@ class Profile extends Component {
   };
 
   removeMedication = (record) => {
-
+    console.log(record);
   };
 
   render() {

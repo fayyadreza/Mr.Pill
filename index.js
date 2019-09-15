@@ -252,8 +252,10 @@ app.delete("/api/delete-med", async (req, res) => {
   profile.medications = profile.medications.filter(
     medId => !medId.equals(med._id)
   ); //this should work
-  await Dosage.deleteOne({ _id: dosage._id }).save();
-  await Medication.deleteOne({ _id: med._id })
+  profile.markModified("medications");
+  await profile.save();
+  await Dosage.findByIdAndRemove(dosage._id).save();
+  await Medication.findByIdAndRemove(med._id)
     .save()
     .then(med => {
       res.status(200).send(med);
