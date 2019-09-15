@@ -64,7 +64,7 @@ class Profile extends Component {
       method: "DELETE",
       headers: "Content-Type: application/json",
       body: JSON.stringify({ id: record._id })
-    }).then(this.fetchTableProps());
+    }).then(() => this.fetchTableProps());
   };
 
   render() {
@@ -96,16 +96,12 @@ class Profile extends Component {
                 )}
               />
             </Table>
-            <Row gutter={15}>
-              <Col>
-                <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
-              </Col>
-              <Col>
-                <Button type="primary" onClick={this.fetchTableProps}>
-                  Update
-                </Button>
-              </Col>
-            </Row>
+            <div>
+              <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
+              <Button type="primary" onClick={this.fetchTableProps}>
+                Update
+              </Button>
+            </div>
           </div>
         </Col>
       </Row>
