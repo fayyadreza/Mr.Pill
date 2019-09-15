@@ -8,20 +8,20 @@ import Modal_Form from './Create_Medication.js';
 class Create_Medication extends Component {
     constructor(props) {
         super(props);
-        state = {
+        this.state = {
             ModalText: 'Please Enter The Information For The New Medication',
             visible: false,
             confirmLoading: false,
             id: this.props.id
         };
 
-        showModal = () => {
+        var showModal = () => {
             this.setState({
                 visible: true,
             });
         };
 
-        handleCreate = () => {
+        var handleCreate = () => {
             this.setState({
                 ModalText: 'The modal will be closed after two seconds',
                 confirmLoading: true,
@@ -34,7 +34,7 @@ class Create_Medication extends Component {
             }, 2000);
         }
 
-        handleCancel = () => {
+        var handleCancel = () => {
             console.log('Clicked cancel button');
             this.setState({
                 visible: false,
@@ -48,15 +48,15 @@ class Create_Medication extends Component {
         const { visible, confirmLoading, id } = this.state;
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>
+                <Button type="primary" onClick={this.showModal()}>
                     Open Modal with async logic
             </Button>
                 <Modal>
                     title="Create New Medication"
                     visible={visible}
-                    onOk={this.handleCreate}
+                    onOk={this.handleCreate()}
                     confirmLoading={confirmLoading}
-                    onCancel={this.handleCancel}
+                    onCancel={this.handleCancel()}
                     <Modal_Form fields={this.state.id} />
                 </Modal>
             </div>
