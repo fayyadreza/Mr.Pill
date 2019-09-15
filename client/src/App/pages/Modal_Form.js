@@ -7,13 +7,18 @@ import Button from 'antd/lib/input';
 class Modal_Form extends Component {
     constructor(props) {
         super(props);
-        state = {
+        this.state = {
             id: this.props.id
         };
 
 
-        var handleCreate = function (id, name, illness, time, current_size, e) {
-            med = {
+        var handleCreate = function () {
+            let id = this.state.id;
+            let name = this.refs.name.value;
+            let illness = this.refs.illness.value;
+            let time = this.refs.time.value;
+            let current_size = this.refs.current_size.value;
+            let med = {
                 id: id,
                 medication: {
                     status: false,
@@ -25,17 +30,17 @@ class Modal_Form extends Component {
                 }
             }
 
-            headers = {
+            let headers = {
                 'Content-type': 'application/json',
             }
 
-            data = {
+            let data = {
                 method: "PUT",
                 header: headers,
                 body: med
             }
 
-            url = "https://hackthenorth2019.herokuapp.com/"
+            let url = "https://hackthenorth2019.herokuapp.com/"
 
             fetch(url, data).then(r => console.log(r))
 
@@ -44,20 +49,13 @@ class Modal_Form extends Component {
 
     render() {
         return (
-            <input type="text" placeholder="Name" id="name" />
-            <input type="text" placeholder="Condition" id="illness" />
-            <input type="text" placeholder="Dosage Time" id="time" />
-            <input type="text" placeholder="Amount of Medication" id="current_size" />
-            <Button type="Primary" onClick={this.handleCreate(
-                (document.getElementById("name").innerText),
-                (document.getElementById("illness").innerText),
-                (document.getElementById("time").innerText),
-                (document.getElementById("current_size").innerText)
-            )}>Submit</Button>
-
-
-
-
+            <div>
+                <input type="text" placeholder="Name" ref="name" />
+                <input type="text" placeholder="Condition" ref="illness" />
+                <input type="text" placeholder="Dosage Time" ref="time" />
+                <input type="text" placeholder="Amount of Medication" ref="current_size" />
+                <Button type="Primary" onClick={this.handleCreate}>Submit</Button>
+            </div>
         );
     }
 }

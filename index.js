@@ -186,6 +186,18 @@ app.get("/api/get-profile-by-email/:email", async (req, res) => {
         });
 });
 
+app.get("/api/get-profile-by-phone/:phone", async (req, res) => {
+    await Profile.findOne({ phone: req.params.phone })
+        .lean()
+        .exec()
+        .then(p => {
+            res.status(200).send(p);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
 // DELETE
 app.delete("/api/profile", async (req, res) => {
     await Profile.findByIdAndRemove(req.body.id)
