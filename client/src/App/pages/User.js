@@ -23,7 +23,7 @@ class User extends Component {
           idHash: []
         };
         //5d7d468ee7179a084efd4c8d
-        fetch("api/get-provider/5d7d5c5826eb0d1e9010264e").then(response => {
+        fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
             console.log(response);
             if (response.status != 200) {
                 console.log("Error communicating with database, error " + response.data);
