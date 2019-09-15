@@ -48,7 +48,7 @@ class Create_Medication extends Component {
         const { visible, confirmLoading, id } = this.state;
         return (
             <div>
-                <Button type="primary" onClick={this.showModal()}>
+                <Button type="primary" onClick={() => this.showModal()}>
                     Open Modal with async logic
             </Button>
                 <Modal>
