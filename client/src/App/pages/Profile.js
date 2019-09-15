@@ -72,7 +72,7 @@ class Profile extends Component {
                         <h2>Current Medications</h2>
 
                             <div classname="meds-table">
-                                <Table dataSource={this.data_source} size="small" rowKey="_id">
+                                <Table dataSource={this.state.data_source} size="small" rowKey="_id">
                                     <Column title="Name" dataIndex="name" key="name" />
                                     <Column
                                         title="Condition"
