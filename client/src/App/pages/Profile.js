@@ -50,8 +50,8 @@ class Profile extends Component {
     this.fetchTableProps = this.fetchTableProps.bind(this);
   };
 
-  fetchTableProps = (id) => {
-    fetch("api/profile/" + this.state.id).then(
+  fetchTableProps = async (id) => {
+    await fetch("api/profile/" + this.state.id).then(
       response => {
         console.log("response", response);
         response.json().then(data => {
