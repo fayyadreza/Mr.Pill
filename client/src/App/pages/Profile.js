@@ -55,46 +55,50 @@ class Profile extends Component {
     render() {
         return (
             <body>
-                <Row gutter={16}>
-                    <Col span={18}>
-                        <h1>This is the profile of {this.state.name} </h1>
-                        <h2>Current Medications</h2>
-                        <Sider />
-                        <Content>
-                            <div classname="meds-table">
-                                <Table dataSource={this.data_source} size="small" rowkey="id">
-                                    <Column title="Name" dataIndex="name" key="name" />
-                                    <Column
-                                        title="Condition"
-                                        dataIndex="condition"
-                                        key="condition"
-                                    />
-                                    <Column title="Dosage" dataIndex="dosage" />
-                                    <Column title="Time" dataIndex="time" key="time" />
-                                    <Column
-                                        title="Amount Remaining"
-                                        dataIndex="amount_remaining"
-                                        key="amount_remaining"
-                                    />
+                <Layout>
+                    <Row gutter={16}>
+                        <Col span={18}>
+                            <h1>This is the profile of {this.state.name} </h1>
+                            <h2>Current Medications</h2>
 
-                                    {/* <Column
+                            <Sider />
+                            <Content>
+                                <div classname="meds-table">
+                                    <Table dataSource={this.data_source} size="small" rowkey="id">
+                                        <Column title="Name" dataIndex="name" key="name" />
+                                        <Column
+                                            title="Condition"
+                                            dataIndex="condition"
+                                            key="condition"
+                                        />
+                                        <Column title="Dosage" dataIndex="dosage" />
+                                        <Column title="Time" dataIndex="time" key="time" />
+                                        <Column
+                                            title="Amount Remaining"
+                                            dataIndex="amount_remaining"
+                                            key="amount_remaining"
+                                        />
+
+                                        {/* <Column
                                     title=""
                                     key="remove"
                                     render={() => <Button type="danger">Remove</Button>}
                                 /> */}
 
-                                    <Column
-                                        title=""
-                                        key="update"
-                                        render={() => <Button type="primary" onClick={this.handleDecrement()}>Decrement</Button>}
-                                    />
-                                </Table>
-                            </div>
-                        </Content>
-                        <Sider />
+                                        <Column
+                                            title=""
+                                            key="update"
+                                            render={() => <Button type="primary" onClick={this.handleDecrement()}>Decrement</Button>}
+                                        />
+                                    </Table>
+                                </div>
+                            </Content>
+                            <Sider />
+                        </Col>
+                    </Row>
                 </Layout>
             </body>
-                );
-            }
-        }
-        export default Profile;
+        );
+    }
+}
+export default Profile;
