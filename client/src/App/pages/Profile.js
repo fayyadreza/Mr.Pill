@@ -23,9 +23,9 @@ class Profile extends Component {
             data_source: user_info.medications
         };
 
-        var fetchTableProps = function () {
+        var fetchTableProps = function (id) {
             fetch(
-                "https://hackthenorth2019.herokuapp.com/api/profile/" + this.state.id
+                "https://hackthenorth2019.herokuapp.com/api/profile/" + id
             ).then(response =>
                 response.json().then(
                     data => {
