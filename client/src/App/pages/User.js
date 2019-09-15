@@ -30,8 +30,8 @@ class User extends Component {
                 return;
             }
             response.json().then(data => {
-              console.log(data);
-              this.setState({ data_source: data.profiles });
+                console.log(data);
+                this.setState({ data_source: data.profiles });
             });
         }
         );
@@ -58,7 +58,7 @@ class User extends Component {
                     <Col span={22}>
                         <br></br>
                         <br></br>
-                        <div style={{ dplsay: 'inline-block' }}>
+                        <div style={{ diplsay: 'inline-block' }}>
                             <h2>Your Patients
                           <Badge status="processing" style={{ marginLeft: '10px' }} />
                             </h2>
