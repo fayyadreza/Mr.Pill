@@ -46,15 +46,14 @@ class Profile extends Component {
         })
       );
     };
-  }
-  fetchTableProps(id) {
+  };
+
+  fetchTableProps = (id) => {
     fetch("api/profile/" + this.state.id).then(
       response => {
         console.log("response", response);
         response.json().then(data => {
-          if (data) {
-            this.setState({ data_source: data.medications });
-          }
+          this.setState({ data_source: data.medications });
         });
       }
     );
@@ -73,14 +72,13 @@ class Profile extends Component {
               size="small"
               rowKey="_id"
             >
-              <Column title="Name" dataIndex="name" key="name" />
-              <Column title="Condition" dataIndex="condition" key="condition" />
-              <Column title="Dosage" dataIndex="dosage" />
-              <Column title="Time" dataIndex="time" key="time" />
+              <Column title="Name" dataIndex="name" />
+              <Column title="Condition" dataIndex="illness" />
+              <Column title="Dosage" dataIndex="dosage.amount" />
+              <Column title="Time" dataIndex="dosage.time" />
               <Column
                 title="Amount Remaining"
-                dataIndex="amount_remaining"
-                key="amount_remaining"
+                dataIndex="current_size"
               />
 
               {/* <Column

@@ -83,9 +83,9 @@ class CollectionsPage extends React.Component {
       }
 
       let data = {
-          method: "PUT",
+          method: "put",
           header: headers,
-          body: med
+          body: JSON.stringify(med)
       }
 
       const url = "api/profile"
