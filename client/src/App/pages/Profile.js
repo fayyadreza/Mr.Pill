@@ -25,7 +25,7 @@ class Profile extends Component {
     };
 
     fetch(
-      "https://hackthenorth2019.herokuapp.com/api/profile/" + this.state.id
+      "api/profile/" + this.state.id
     ).then(response => {
       console.log("response", response);
       response.json().then(data => {
@@ -46,7 +46,7 @@ class Profile extends Component {
     };
   }
   fetchTableProps(id) {
-    fetch("https://hackthenorth2019.herokuapp.com/api/profile/" + id).then(
+    fetch("api/profile/" + id).then(
       response => {
         console.log("response", response);
         response.json().then(data => {
