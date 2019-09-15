@@ -10,8 +10,8 @@ class App extends Component {
   render() {
     const App = () => (
       <Switch>
-        {/* <Route exact path='/' component={Home} /> */}
-        <Route path='/' component={User} />
+        <Route exact path='/' component={Home} />
+        <Route path='/user' component={User} />
         <Route path='/profile' component={Profile} />
       </Switch>
     )
