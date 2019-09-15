@@ -59,10 +59,6 @@ class Modal_Form extends Component {
                 (document.getElementById("time").innerText),
                 (document.getElementById("current_size").innerText)
             )}>Submit</Button>
-
-
-
-
         );
     }
 }

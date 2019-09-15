@@ -89,7 +89,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
-                                <Create_Medication state={"id": this.state.id} />
+                                <Create_Medication profile={ this.state.id } />
                             </div>
                         </Content>
                         <Sider />
