@@ -50,11 +50,9 @@ class Profile extends Component {
     this.fetchTableProps = this.fetchTableProps.bind(this);
   };
 
-  fetchTableProps = async (id) => {
-    await fetch("api/profile/" + this.state.id).then(
-      response => {
-        console.log("response", response);
-        response.json().then(data => {
+  fetchTableProps = () => {
+    fetch("api/profile/" + this.state.id).then(
+      response => { console.log("response", response); response.json().then(data => {
           this.setState({ data_source: data.medications });
         });
       }
@@ -62,7 +60,11 @@ class Profile extends Component {
   };
 
   removeMedication = (record) => {
-    console.log(record);
+    fetch("api/profile", {
+      method: "DELETE",
+      headers: "Content-Type: application/json",
+      body: JSON.stringify({ id: record._id })
+    }).then(this.fetchTableProps(););
   };
 
   render() {
@@ -94,10 +96,15 @@ class Profile extends Component {
                 )}
               />
             </Table>
-            <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
-            <Button type="primary" onClick={this.fetchTableProps}>
-              Update
-            </Button>
+            <Row gutter={15}>
+              <Col>
+                <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
+              </Col>
+              <Col>
+                <Button type="primary" onClick={this.fetchTableProps}>
+                  Update
+                </Button>
+              </Col>
           </div>
         </Col>
       </Row>
