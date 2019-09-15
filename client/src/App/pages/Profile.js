@@ -89,7 +89,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
-                                <ModalForm fields={ this.state.id } />
+                                {/* <ModalForm fields={ this.state.id } /> */}
                             </div>
                         </Content>
                         <Sider />
