@@ -54,7 +54,7 @@ class User extends Component {
         }
         return (
             <body>
-                <Row gutter={16} type="flex" justify="center">
+                <Row type="flex" justify="center">
                     <Col span={22}>
                         <br></br>
                         <br></br>
