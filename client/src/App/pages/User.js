@@ -26,12 +26,14 @@ class User extends Component {
 
 
         fetch("api/get-provider/5d7d468ee7179a084efd4c8d").then(response => {
-            if (response.status !== 200) {
+            console.log(response);
+            if (response.status != 200) {
                 console.log("Error communicating with database, error " + response.data);
                 return;
             }
             response.json().then(data => {
-                this.state.data_source = { name: data.name, email: data.email, phone: data.phone };
+              console.log(data);
+                this.setState({ data_source: {  }});
             });
         }
         );
@@ -52,7 +54,7 @@ class User extends Component {
                        </h2>
                     </div>
                         <div classname='meds-table'>
-                            <Table dataSource={this.data_source} size="small" rowKey="uid">
+                            <Table dataSource={this.state.data_source} size="small" rowKey="uid">
                                 <Column title="Name" dataIndex="name" />
                                 <Column title="Age" dataIndex="age" />
                                 <Column title="Id" dataIndex="id" />

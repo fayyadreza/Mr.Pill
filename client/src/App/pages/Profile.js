@@ -26,7 +26,7 @@ class Profile extends Component {
         ).then(response =>
             response.json().then(
                 data =>
-                    (this.data.source = {
+                    (this.data_source = {
                         id: data.id,
                         name: data.name,
                         medications: data.medications
