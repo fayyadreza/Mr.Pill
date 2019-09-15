@@ -88,15 +88,6 @@ class Profile extends Component {
               />
               <Column
                 title=""
-                key="update"
-                render={() => (
-                  <Button type="primary" onClick={this.fetchTableProps}>
-                    Update
-                  </Button>
-                )}
-              />
-              <Column
-                title=""
                 key="remove"
                 render={(text, record) => (
                   <Button type="danger" onClick={() => this.removeMedication(record)}>Remove</Button>
@@ -104,6 +95,9 @@ class Profile extends Component {
               />
             </Table>
             <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
+            <Button type="primary" onClick={this.fetchTableProps}>
+              Update
+            </Button>
           </div>
         </Col>
       </Row>
