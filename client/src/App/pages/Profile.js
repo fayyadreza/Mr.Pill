@@ -46,6 +46,8 @@ class Profile extends Component {
         })
       );
     };
+
+    this.fetchTableProps = this.fetchTableProps.bind(this);
   };
 
   fetchTableProps = (id) => {
@@ -57,7 +59,11 @@ class Profile extends Component {
         });
       }
     );
-  }
+  };
+
+  removeMedication = (record) => {
+
+  };
 
   render() {
     return (
@@ -96,8 +102,14 @@ class Profile extends Component {
                   </Button>
                 )}
               />
+              <Column
+                title=""
+                key="remove"
+                render={(text, record) => (
+                  <Button type="danger" onClick={() => this.removeMedication(record)}>Remove</Button>
+                )}
             </Table>
-            <CollectionsPage profile={this.state.id} />
+            <CollectionsPage profile={this.state.id} handler={this.fetchTableProps} />
           </div>
         </Col>
       </Row>

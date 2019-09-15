@@ -83,13 +83,13 @@ class CollectionsPage extends React.Component {
 
       let data = {
           method: "PUT",
-          header: headers,
+          headers: headers,
           body: JSON.stringify(med)
       }
 
       const url = "api/profile"
 
-      fetch(url, data).then(r => console.log(r))
+      fetch(url, data).then(r => console.log(r)).then(this.props.handler());
       form.resetFields();
       this.setState({ visible: false });
     });
