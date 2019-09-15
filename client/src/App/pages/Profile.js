@@ -36,8 +36,7 @@ class Profile extends Component {
                 )
             );
         }
-        fetchTableProps(this.state.id);
-
+        fetchTableProps(this.state.id); 
         var handleDecrement = function (id) {
             fetch(
                 "https://hackthenorth2019.herokuapp.com/api/decrement-dosage" + id
@@ -86,7 +85,7 @@ class Profile extends Component {
                                         render={() => <Button type="primary" onClick={this.fetchTableProps()}>Update</Button>}
                                     />
                                 </Table>
-                                <CollectionsPage fields={ this.state.id } />
+                                <CollectionsPage profile={ this.state.id } />
                             </div>
                     </Col>
                 </Row>

@@ -39,6 +39,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 class CollectionsPage extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       id: this.props.profile
     };
@@ -63,11 +64,9 @@ class CollectionsPage extends React.Component {
         return;
       }
 
-      values.id = this.state.id;
-
       console.log('Received values of form: ', values);
       let med = {
-          id: values.id,
+          id: this.state.id,
           medication: {
               status: false,
               name: values.name,
