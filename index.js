@@ -3,7 +3,7 @@ const path = require('path');
 var mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hack', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hack', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 const app = express();
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -14,7 +14,10 @@ app.use(bodyParser.json());
 // MODELS 
 var dosageSchema = new mongoose.Schema({
     time: String,
-    amount: Number }); var usageHistorySchema = new mongoose.Schema({
+    amount: Number
+});
+
+var usageHistorySchema = new mongoose.Schema({
     status: Boolean,
     updated_at: Date
 });
@@ -84,25 +87,25 @@ app.delete('/api/del-provider', async (req, res) => {
 });
 
 app.post('/api/update-provider/:id', async (req, res) => { //adds new patient to the provider
-   const provider = await Provider.updateOne({_id: req.user._id}, {name: req.body.name, email: req.body.email, phone: req.body.phone});
-   provider.markModified("profiles");
-   await provider.save()
-     .then(p => {
-       res.status(200).send(p);
-     })
-     .catch(err => {
-       res.status(400).send(err);
-     });
+    const provider = await Provider.updateOne({ _id: req.user._id }, { name: req.body.name, email: req.body.email, phone: req.body.phone });
+    provider.markModified("profiles");
+    await provider.save()
+        .then(p => {
+            res.status(200).send(p);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 app.get('/api/get-patients-provider/:id', async (req, res) => {
-   await (Provider.findOne({_id: mongoose.Types.ObjectId(req.params.id)})).profiles
-       .then(profiles => {
-           res.status(200).send(profiles);
-       })
-       .catch(err => {
-           res.status(400).send(err);
-       });
+    await (Provider.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })).profiles
+        .then(profiles => {
+            res.status(200).send(profiles);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 const port = process.env.PORT || 5000;
@@ -112,63 +115,63 @@ app.listen(port);
 
 // CREATE
 app.post('/api/profile', async (req, res) => {
-  let profile = new Profile(req.body.profile);
-  await profile.save()
-  await Provider.findById(req.body.profile.provider_id)
-    .then((p) => {
-      p.profiles.push(profile);
-      p.save();
-      res.status(200).end(profile);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    let profile = new Profile(req.body.profile);
+    await profile.save()
+    await Provider.findById(req.body.profile.provider_id)
+        .then((p) => {
+            p.profiles.push(profile);
+            p.save();
+            res.status(200).end(profile);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // PUT
 app.put('/api/profile/', async (req, res) => {
-  await Profile.findById(req.body.id)
-    .then((profile) => {
-      profile.medications.push(new Medication(req.body.medication));
-      profile.markModified('medications');
-      profile.save();
-      res.status(200).send(profile);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    await Profile.findById(req.body.id)
+        .then((profile) => {
+            profile.medications.push(new Medication(req.body.medication));
+            profile.markModified('medications');
+            profile.save();
+            res.status(200).send(profile);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // GET
 app.get('/api/profile/:id', async (req, res) => {
-  await Profile.findById(req.params.id).lean().exec()
-    .then((p) => {
-      res.status(200).send(p);
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+    await Profile.findById(req.params.id).lean().exec()
+        .then((p) => {
+            res.status(200).send(p);
+        })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
 });
 
 app.get('/api/get-profile-by-email/:email', async (req, res) => {
-  await Profile.findOne({ email: req.params.email }).lean().exec()
-    .then((p) => {
-      res.status(200).send(p);
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+    await Profile.findOne({ email: req.params.email }).lean().exec()
+        .then((p) => {
+            res.status(200).send(p);
+        })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
 });
 
 // DELETE
 app.delete('/api/profile', async (req, res) => {
-  await Profile.findByIdAndRemove(req.body.id)
-    .then(p => {
-      res.status(200).send(p);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
+    await Profile.findByIdAndRemove(req.body.id)
+        .then(p => {
+            res.status(200).send(p);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
 });
 
 // Medication endpoints
